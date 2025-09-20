@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAAAA</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0;}
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #121212 0%, #232526 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .card {
+      background: rgba(26,26,26,0.86);
+      box-shadow: 0 8px 32px 0 rgba(30,30,30,0.38);
+      backdrop-filter: blur(7.5px);
+      border-radius: 22px;
+      padding: 3vw 3vw 2vw 3vw;
+      max-width: 510px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+      animation: fadeInCard .7s cubic-bezier(.4,.2,.2,1);
+      display: grid;
+      grid-template-rows: auto auto auto auto auto 70px auto;
+      grid-row-gap: 1.1rem;
+      min-height: 540px;
+      margin: 0 auto;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 48px 0 #111;
+    }
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(40px);}
+      to   { opacity: 1; transform: translateY(0);}
+    }
+    .thumb-container {
+      position: relative;
+      margin: 0 auto 1.2rem auto;
+      width: 100%;
+      max-width: 470px;
+      grid-row: 1;
+    }
+    .review-img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      border-radius: 17px;
+      border: 2px solid #232526;
+      box-shadow: 0 8px 40px #111, 0 1px 8px #23252666;
+      background: #222;
+      opacity: 0.96;
+      transition: box-shadow 0.23s, opacity 0.2s;
+      filter: brightness(0.87);
+    }
+    .thumb-container:hover .review-img {
+      opacity: 1;
+      filter: brightness(1.07);
+      box-shadow: 0 16px 52px #232526, 0 2px 12px #000;
+    }
+    h1 {
+      font-size: 1.48rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      margin: 0.7rem 0 0.8rem 0;
+      text-shadow: 0 2px 8px #000;
+      grid-row: 2;
+    }
+    .desc {
+      color: #bbb;
+      font-size: 1.08em;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      opacity: 0.94;
+      grid-row: 3;
+    }
+    .stars {
+      margin-bottom: 1.1rem;
+      grid-row: 4;
+    }
+    .stars svg {
+      width: 22px;
+      height: 22px;
+      margin: 2px;
+      vertical-align: middle;
+      filter: drop-shadow(0 1px 2px #232526);
+    }
+    .open-link {
+      background: linear-gradient(90deg,#232526 60%,#121212 140%);
+      color: #fff;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1.18em;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 1px 8px #12121290;
+      letter-spacing: 0.5px;
+      border: 1px solid #23252690;
+      transition: background 0.3s, box-shadow 0.2s;
+      cursor: pointer;
+      grid-row: 5;
+    }
+    .open-link:hover {
+      background: linear-gradient(90deg,#121212 80%,#232526 180%);
+      box-shadow: 0 4px 16px #000;
+      color: #FFD700;
+      transform: scale(1.04);
+    }
+    .ad-below-watch, .ad-modal {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60px;
+      margin: 10px 0;
+      gap: 8px;
+      width: 100%;
+    }
+    #adBelowWatch, #adModal {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .more-video-btn {
+      background: linear-gradient(90deg,#232526 60%,#121212 140%);
+      color: #FFD700;
+      padding: 0.63rem 1.35rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1.09em;
+      text-decoration: none;
+      display: inline-block;
+      margin: 13px auto 0 auto;
+      box-shadow: 0 1px 8px #23252680;
+      letter-spacing: 0.5px;
+      border: 1px solid #FFD70070;
+      transition: background 0.3s, box-shadow 0.2s;
+      cursor: pointer;
+      grid-row: 7;
+    }
+    .more-video-btn:hover {
+      background: linear-gradient(90deg,#FFD700 80%,#232526 180%);
+      color: #232526;
+      box-shadow: 0 4px 16px #FFD70090;
+      transform: scale(1.04);
+    }
+    .video-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10,10,10,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+      animation: fadeInCard .5s;
+      backdrop-filter: blur(6px);
+    }
+    .video-modal-content {
+      background: rgba(24,24,24,0.98);
+      border-radius: 21px;
+      box-shadow: 0 8px 32px #23252680;
+      padding: 34px 22px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 98vw;
+      width: 98vw;
+      position: relative;
+      min-height: 420px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 16px; right: 24px;
+      background: #FFD700;
+      color: #232526;
+      border: none;
+      border-radius: 50px;
+      padding: 7px 24px;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      box-shadow: 0 2px 12px #FFD70040;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #232526;
+      color: #FFD700;
+    }
+    .video-player {
+      width: 700px;
+      max-width: 98vw;
+      height: 400px;
+      max-height: 55vw;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #23252690;
+      margin-bottom: 8px;
+      background: #111;
+      outline: none;
+    }
+    @media (max-width: 800px) {
+      .card {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 4vw 1vw 2vw 1vw;
+      }
+      .thumb-container {
+        max-width: 97vw;
+      }
+      .review-img {
+        height: 33vw;
+        min-height: 120px;
+        max-height: 260px;
+      }
+      h1 { font-size: 1.15rem;}
+      .desc { font-size: 0.98em;}
+      .stars svg { width: 19px; height: 19px;}
+      .open-link, .more-video-btn {
+        font-size: 1em;
+        padding: 0.68rem 1.05rem;
+        border-radius: 8px;
+      }
+    }
+    @media (max-width: 500px) {
+      body { padding: 2vw;}
+      .card {
+        padding: 2vw 1vw 2vw 1vw;
+        max-width: 99vw;
+        min-width: 0;
+        min-height: 370px;
+        grid-row-gap: 0.7rem;
+      }
+      .thumb-container {
+        max-width: 99vw;
+      }
+      .review-img {
+        height: 32vw;
+        min-height: 90px;
+        max-height: 120px;
+      }
+      h1 { font-size: 1.01rem;}
+      .desc { font-size: 0.93em;}
+      .video-modal-content { min-height: 220px;}
+      .close-btn { top: 10px; right: 12px; padding: 6px 12px; font-size: .95em;}
+      .ad-modal { margin-top: 22px;}
+      .video-player {
+        width: 100vw;
+        max-width: 100vw;
+        height: 62vw;
+        max-height: 65vw;
+        border-radius: 0;
+      }
+    }
+    @media (max-width: 350px) {
+      h1 { font-size: 0.8rem;}
+      .desc { font-size: 0.85em;}
+    }
+    @media (max-width: 700px) and (orientation: landscape) {
+      .video-player {
+        width: 100vw;
+        height: 80vw;
+        max-height: 100vw;
+      }
+      .video-modal-content {
+        width: 100vw;
+        min-height: 180px;
+        padding: 8px 0 8px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Thumbnail -->
+    <div class="thumb-container">
+      <img src="opqvLqtU1.jpg" alt="Video Thumbnail" class="review-img">
+    </div>
+    <h1>AAAAAA</h1>
+    <div class="desc">🔥 Viral Picks for You!
+Don't miss the latest funny, wild, and trending videos. Laugh, relax, and share with your friends!</div>
+    <div class="stars">
+      <!-- 6.2 stars -->
+      <svg fill="#FFD700" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <svg fill="#FFD700" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <svg fill="#FFD700" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <svg fill="#FFD700" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <svg fill="#FFD700" viewBox="0 0 24 24"><path d="M12 17.27L14.58 21l-1.4-6.03L17 9.24l-5.19-.61L12 2"/></svg>
+      <span style="color:#FFD700;font-weight:600;font-size:.99em;vertical-align:middle;">7.7</span>
+    </div>
+    <button class="open-link" onclick="showVideoModal()">
+      Watch Video
+    </button>
+    <!-- Ads below watch video -->
+    <div class="ad-below-watch">
+      <div id="adBelowWatch"></div>
+    </div>
+    <!-- More Video Button Below Ads -->
+    <button class="more-video-btn" onclick="window.location.href='https://videyaxhub.github.io'">
+      More Videos
+    </button>
+  </div>
+  <!-- Modal Video -->
+  <div id="videoModal" class="video-modal" style="display:none;">
+    <div class="video-modal-content">
+      <button class="close-btn" onclick="closeVideoModal()">Close ✕</button>
+      <!-- Ads below close button -->
+      <div class="ad-modal" id="adModal"></div>
+      <video class="video-player" controls autoplay>
+        <source src="https://cdn.videy.co/opqvLqtU1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  <script type="text/javascript">
+    // Dua slot iklan di bawah tombol Watch Video
+    function injectAdBelowWatch() {
+      var adDiv = document.getElementById('adBelowWatch');
+      if (adDiv && !adDiv.hasChildNodes()) {
+        // Ad Slot 1
+        var scriptConfig1 = document.createElement('script');
+        scriptConfig1.type = "text/javascript";
+        scriptConfig1.innerHTML = "atOptions = { 'key' : '97769e31ab76979e0ee340bc5c857351', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };";
+        adDiv.appendChild(scriptConfig1);
+
+        var scriptSrc1 = document.createElement('script');
+        scriptSrc1.type = "text/javascript";
+        scriptSrc1.src = "//www.highperformanceformat.com/97769e31ab76979e0ee340bc5c857351/invoke.js";
+        adDiv.appendChild(scriptSrc1);
+
+        // Ad Slot 2
+        var scriptConfig2 = document.createElement('script');
+        scriptConfig2.type = "text/javascript";
+        scriptConfig2.innerHTML = "atOptions = { 'key' : '4a2fc598ebbbdbc95eb3bef73798c939', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };";
+        adDiv.appendChild(scriptConfig2);
+
+        var scriptSrc2 = document.createElement('script');
+        scriptSrc2.type = "text/javascript";
+        scriptSrc2.src = "//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js";
+        adDiv.appendChild(scriptSrc2);
+      }
+    }
+    injectAdBelowWatch();
+
+    // Dua slot iklan di dalam modal
+    function showVideoModal() {
+      document.getElementById('videoModal').style.display = 'flex';
+      var adDiv = document.getElementById('adModal');
+      if (adDiv && !adDiv.hasChildNodes()) {
+        // Ad Slot 1
+        var scriptConfig1 = document.createElement('script');
+        scriptConfig1.type = "text/javascript";
+        scriptConfig1.innerHTML = "atOptions = { 'key' : '97769e31ab76979e0ee340bc5c857351', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };";
+        adDiv.appendChild(scriptConfig1);
+
+        var scriptSrc1 = document.createElement('script');
+        scriptSrc1.type = "text/javascript";
+        scriptSrc1.src = "//www.highperformanceformat.com/97769e31ab76979e0ee340bc5c857351/invoke.js";
+        adDiv.appendChild(scriptSrc1);
+
+        // Ad Slot 2
+        var scriptConfig2 = document.createElement('script');
+        scriptConfig2.type = "text/javascript";
+        scriptConfig2.innerHTML = "atOptions = { 'key' : '4a2fc598ebbbdbc95eb3bef73798c939', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };";
+        adDiv.appendChild(scriptConfig2);
+
+        var scriptSrc2 = document.createElement('script');
+        scriptSrc2.type = "text/javascript";
+        scriptSrc2.src = "//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js";
+        adDiv.appendChild(scriptSrc2);
+      }
+    }
+    function closeVideoModal() {
+      document.getElementById('videoModal').style.display = 'none';
+      var vid = document.querySelector('.video-player');
+      if (vid) { vid.pause(); }
+    }
+
+    (function () {
+      document.addEventListener('contextmenu', function (e) {
+        if (!e.target.closest('.allow-context, iframe')) {
+          e.preventDefault();
+        }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === "F12") e.preventDefault();
+        if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) e.preventDefault();
+        if (e.ctrlKey && ["U","S"].includes(e.key.toUpperCase())) e.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4573229,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4573229&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->
